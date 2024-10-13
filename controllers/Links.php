@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use yii\db\ActiveRecord;
+use app\Infrastructure\Uuid;
 
 /**
  * This is the model class for table "links".
@@ -43,7 +44,7 @@ class Links extends ActiveRecord
     }
     public function beforeValidate()
     {
-        $this->short = app\Infrastructure\Uuid\Uuid::next();
+        $this->short = Uuid::next();
         return parent::beforeValidate();
     }
 

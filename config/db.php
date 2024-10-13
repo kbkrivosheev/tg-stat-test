@@ -1,8 +1,10 @@
 <?php
 
+use yii\db\Connection;
+
 return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=tg_stat_test',
+    'class' => Connection::class,
+    'dsn' => 'mysql:host=127.0.0.1;dbname=tg_stat_test',
     'username' => 'root',
     'password' => '123456',
     'charset' => 'utf8',

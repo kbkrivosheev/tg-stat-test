@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace app\Infrastructure\Uuid;
+namespace app\models;
 
 use DomainException;
 use Ramsey\Uuid\Exception\UnsupportedOperationException;
@@ -34,10 +32,11 @@ final class Uuid
     /**
      * @throws DomainException
      */
-    public static function next(): self
+    public static function next():string
     {
         try {
-            return new self(\Ramsey\Uuid\Uuid::uuid4()->toString());
+            $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+            return substr(md5($uuid), 0, 5);
         } catch (DomainException|UnsupportedOperationException $e) {
             throw new DomainException($e->getMessage(), $e->getCode(), $e);
         }
