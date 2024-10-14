@@ -8,6 +8,7 @@ use yii\web\Response;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Links;
+use app\Infrastructure\Uuid;
 
 class SiteController extends Controller
 {
@@ -22,11 +23,21 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = new Links();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {          
-            $model->save();            
-            return $this->render('index', ['model' => $model]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->short = Uuid::next();
+            $model->save();
         }
         return $this->render('index', ['model' => $model]);
+    }
+
+    public function actionView($short)
+    {   
+        if($original = Links::find()->select('original')->where(['short' => $short])->scalar())
+        {
+            return $this->redirect($original);
+        }
+        Yii::$app->session->setFlash('error', 'Ссылка не найдена');
+        return $this->redirect('/index');
     }
 
     /**

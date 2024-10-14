@@ -31,8 +31,8 @@ class Links extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['original', 'short'], 'required'],
-            ['short', 'unique', 'message' => 'Этот URL уже существует.'],
+            [['original'], 'required', 'message' => 'Поле не должно быть пустым'],
+            [['original'], 'url', 'message' => 'Неверный формат URL'],
         ];
 
     }
@@ -43,11 +43,6 @@ class Links extends ActiveRecord
             'original' => 'Ввведите ссылку',
             'short' => 'Скопируйте ссылку'
         ];
-    }
-    public function beforeValidate()
-    {
-        $this->short = Uuid::next();
-        return parent::beforeValidate();
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\Infrastructure;
 
 use DomainException;
 use Ramsey\Uuid\Exception\UnsupportedOperationException;
